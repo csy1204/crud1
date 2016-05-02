@@ -5,6 +5,8 @@ class CreatePosts < ActiveRecord::Migration
       
       t.string :title
       t.text   :content
+      t.integer :post_length
+      t.integer :post_words
 
 
 

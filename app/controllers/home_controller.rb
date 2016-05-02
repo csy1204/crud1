@@ -6,12 +6,25 @@ class HomeController < ApplicationController
   end
 
   def write
-    post = Post.new
-    post.title = params[:title]
-    post.content = params[:content]    
-    post.save
+#    post = Post.new
+#    post.title = params[:title]
+#    post.content = params[:content]    
+#    post.save
+
+#   Post.create(title: params[:title], content: params[:content])
+
+    @howmany = params[:content]
     
-    redirect_to "/home/index"
+    @plength = @howmany.size
+    @pwords = @howmany.split.size
+
+    post = Post.new(title: params[:title], content: params[:content], post_length: @plength, post_words: @pwords)
+    
+    if post.save
+      redirect_to "/home/index"
+    else
+      render :text => post.errors.messages[:title].first
+    end
     
   end
 
