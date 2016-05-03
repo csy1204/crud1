@@ -14,12 +14,17 @@
     <br>
     <% @posts.each do |p| %>
         <div class="well" style="margin-top: 20px">
+            <span style="font-weight: bold; font-size: 20px">#<%= p.id %></span><div style="float: right;"><%= p.created_at.in_time_zone("Asia/Seoul").strftime("%Y년%m월%d일 %H시%M분%S초") %> 
+            <a href='/update_view/<%= p.id %>'>수정</a> <a href='/destroy/<%= p.id %>'>삭제</a></div>
             <h3 style="font-weight: bold"><%= p.title %></h3>
             <p><%= p.content %></p>
+            
             <p> 글자수: <%= p.post_length %></p>
-            <p> 단어수: <%= p.post_words %></p> 
+            <p> 단어수: <%= p.post_words %></p>
+            <p> 글자수 (공백제외): <%= p.content.gsub(/\s+/, "").size %></p>
             <% p.replies.each do |r| %>
-                <p> <%= r.content %></p>
+                <%= r.content %><div style="float: right;"><%= r.created_at.in_time_zone("Asia/Seoul").strftime("%Y년%m월%d일 %H시%M분%S초") %> 
+                <a href='/reply_update_view/<%= r.id %>'>수정</a> <a href='/reply_destroy/<%= r.id %>'>삭제</a></div> <br>
             <% end %>
             <form action="/home/reply_write" method="POST">
                <div class="form-group">
